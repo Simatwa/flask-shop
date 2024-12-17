@@ -7,13 +7,15 @@ from flask.helpers import get_debug_flag
 
 
 class DBConfig:
-    db_type = os.getenv("DB_TYPE", "mysql")
+    db_type = os.getenv("DB_TYPE", "sqlite")
     user = os.getenv("DB_USER", "root")
     passwd = os.getenv("DB_PASSWD", "123456")
     host = os.getenv("DB_HOST", "127.0.0.1")
     port = os.getenv("DB_PORT", 3306)
     db_name = os.getenv("DB_NAME", "flaskshop")
-    if db_type == "postgresql":
+    if db_type == "sqlite":
+        db_uri = "sqlite:///db.sqlite3"
+    elif db_type == "postgresql":
         db_uri = f"postgresql://{user}:{passwd}@{host}:{port}/{db_name}"
     elif db_type == "mysql":
         db_uri = (
